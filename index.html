@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>3. DN :: OIS 2021/2022</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <link rel="icon" href="./favicon.png" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.stock.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="knjiznice/js/koda.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.3/web3.min.js"></script>
+  </head>
+  <body style="background-color: 	#c8c8c8;">
+    <!-- ZAČETEK: Menujska vrstica na vrhu spletne strani -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <!-- ZAČETEK: Ime vaše aplikacije -->
+        <a class="nav-link navbar-brand" href="index.html"
+          >Portfolio Tracker</a
+        >
+        <!-- KONEC: Ime vaše aplikacije -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#menujska-vrstica"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon" title="Prikaži menu"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menujska-vrstica">
+          <div class="navbar-nav">
+            <a class="nav-link" href="opis.html"><i class="fa-solid fa-book me-1"></i>Opis ideje</a>
+            <a class="nav-link" href="nacrt.html"
+              ><i class="fa-solid fa-diagram-project me-1"></i>Načrt informacijske rešitve</a
+            >
+            <a class="nav-link" href="#" onclick="generirajScenarije()"><i class="fa-solid fa-gears me-1"></i>Generiranje podatkov</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- KONEC: Menujska vrstica na vrhu spletne strani -->
+
+    <!-- ZAČETEK: Vsebina aplikacije -->
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col">
+          <div class="card mt-3">
+            <div class="card-header" style="background-color: black;">
+              <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8 text-light">
+                  <b>Registriraj </b> novega uporabnika
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <select
+                    class="form-select form-select-sm"
+                    id="scenarijNovUporabnik"
+                  >
+                    <option value=""></option>
+                    <option value="Janez,Novak,1965-03-04">Jan Novak</option>
+                    <option value="Tinkara,Škof,2000-06-01">Tinkara Kotink</option>
+                    <option value="Luka,Laznik,1994-07-02">Luka Golob</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="card-body" style="background-color: #EEEEEE;">
+              <span class="badge bg-secondary">Ime</span
+              ><input
+                id="ime"
+                type="text"
+                class="form-control form-control-sm mb-2"
+                placeholder="Luka"
+              />
+              <span class="badge bg-secondary">Priimek</span
+              ><input
+                id="priimek"
+                type="text"
+                class="form-control form-control-sm mb-2"
+                placeholder="Laznik"
+              />
+              <span class="badge bg-secondary">Datum rojstva</span
+              ><input
+                id="datumRojstva"
+                type="text"
+                class="form-control form-control-sm mb-2"
+                placeholder="1994-07-02"
+              />
+              <button
+                type="button"
+                class="btn btn-warning btn-sm"
+                onclick="registrirajUporabnika()"
+              >
+                Dodaj osnovne podatke o uporabniku</button
+              >
+              <div id="kreirajSporocilo"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col mb-3">
+          <div class="card mt-3 mb-4 h-100 mh-100">
+            <div class="card-header" style="background-color: black;">
+              <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8 text-light">
+                  <b>Pridobi podatke</b> obstoječega uporabnika
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <select
+                  class="form-select form-select-sm"
+                  id="preberiUporabnika"
+                >
+                  <option value=""></option>
+                  <option value="903f28c4-51e7-49c4-a813-ddfd0339c928">Jan Novak</option>
+                  <option value="9a3bb943-394b-4567-9d62-d3f986254b1b">Tinkara Kotnik</option>
+                  <option value="55326a1c-4213-4d8b-92a7-c0a99837d890">Luka Golob</option>
+                </select>
+                </div>
+              </div>
+            </div>
+            <div class="card-body " style="background-color: #EEEEEE;">
+              <span class="badge bg-secondary">ID</span
+              ><input
+                id="preberiUporabnikaId"
+                type="text"
+                class="form-control form-control-sm mb-2"
+                placeholder="55326a1c-4213-4d8b-92a7-c0a99837d890"
+              />
+              <button
+                type="button"
+                class="btn btn-warning btn-sm mb-3"
+                onclick="preberiUporabnika()"
+              >
+                Preberi osnovne podatke o uporabniku</button
+              >
+              <div id="preberiSporocilo"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col mb-3 mh-100">
+          <div class="card mt-3 h-100">
+            <div class="card-header text-light" style="background-color: black;" ><strong>Všečkanje</strong>
+            </div>
+            <div class="card-body" style="background-color: #EEEEEE;">
+              <span class="badge bg-secondary">Denarnica</span>
+              <input
+              id="denarnica" 
+              type="text"
+              placeholder="Vnesite številko denarnice..."
+              class="form-control form-control-sm mb-2"
+              >
+              <span class="badge bg-secondary">Geslo</span>
+              <input 
+              id="geslo"
+              type="text"
+              placeholder="Vnesite geslo..."
+              class="form-control form-control-sm mb-2"
+              >
+              <button type="button" id="gumb-potrdi-prijavo" class="btn btn-warning me-3 mb-1"
+                    disabled><i class="fa fa-sign-in" aria-hidden="true"></i>
+                    </i>
+                  Prijava
+              </button>
+              <button type="button" id="gumb-vseckanje" class="btn btn-danger me-3" disabled data-bs-toggle="modal"
+              data-bs-target="#modalno-okno-donacije">
+                <i class="fas fa-thumbs-up"></i>  Všečkaj</button>
+              <button type="button" class="btn btn-info  me-3 mt-1" data-bs-toggle="modal"
+                      data-bs-target="#modalno-okno-seznam-donacij"><i class="fa-solid fa-list-ul"></i> Pregled donacij
+              </button>
+              <div id="eth-racun"></div>
+              <div id="napakaPrijava"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-xl-4">
+          <div class="card mt-2 mb-2" id="vnosPortfolija">
+            <div class="card-header" style="background-color: black;">
+              <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8 text-light">
+                  <b>Vnos</b> portfolia
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <select
+                    class="form-select form-select-sm"
+                    id="portfolijUporabnik"
+                  >
+                    <option value=""></option>
+                    <option value="903f28c4-51e7-49c4-a813-ddfd0339c928">Jan Novak</option>
+                    <option value="9a3bb943-394b-4567-9d62-d3f986254b1b">Tinkara Kotnik</option>
+                    <option value="55326a1c-4213-4d8b-92a7-c0a99837d890">Luka Golob</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="card-body" style="background-color: #EEEEEE;">
+              <div id="poljaValute">
+                <span class="badge bg-secondary">ID</span
+                ><input
+                  id="vnosPortfolijaId"
+                  type="text"
+                  class="form-control form-control-sm mb-3"
+                  placeholder="55326a1c-4213-4d8b-92a7-c0a99837d890"
+                />
+                
+              </div>
+              <div style="display: grid;">
+                <button class="btn btn-success btn-sm" style="margin: auto;" onclick="dodajPolje()"><i class="fa-solid fa-plus"></i></button>
+              </div>
+              
+              <div style="display: grid; margin: 4px;">
+                <button
+                type="button"
+                class="btn btn-warning btn-sm"
+                style="margin: auto;"
+                onclick="dodajPortfolio()"
+                >
+                  Shrani portfolio</button
+                >
+              </div>
+              <span id="sporociloPortfolio"></span>
+            </div>
+          </div>
+          
+        </div>
+        <div class="col-xl-8">
+          <div class="card mt-2">
+            <div class="card-header" style="background-color: black;">
+              <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8 text-light">
+                  <b>Grafikon</b> <b>portfolia</b> uporabnika / graf Bitcoina
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <select
+                  class="form-select form-select-sm"
+                  id="grafPortfolija"
+                >
+                  <option value=""></option>
+                  <option value="903f28c4-51e7-49c4-a813-ddfd0339c928">Jan Novak</option>
+                  <option value="9a3bb943-394b-4567-9d62-d3f986254b1b">Tinkara Kotnik</option>
+                  <option value="55326a1c-4213-4d8b-92a7-c0a99837d890">Luka Golob</option>
+                </select>
+                </div>
+              </div>
+            </div>
+            <div class="card-body" style="background-color: #EEEEEE;">
+              <span class="badge bg-secondary">ID</span
+              ><input
+                id="grafPortfolijaId"
+                type="text"
+                class="form-control form-control-sm mb-2"
+                placeholder="55326a1c-4213-4d8b-92a7-c0a99837d890"
+              />
+              <button
+                type="button"
+                class="btn btn-warning btn-sm"
+                onclick="prikaziGraf()"
+              >
+                Prikazi grafikon</button
+              >
+              <div>
+                <div id="chartContainer" style="height: 605px; width: 100%; margin-top: 5px;" class="mb-3"></div>
+              </div>
+              <h3 id="prikazVrednosti" style="font-size: 60px; text-align: center;"></h3>
+              <div id="description"></div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
+
+
+
+
+  <div class="modal fade" id="modalno-okno-donacije" data-bs-backdrop="static" tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+     <div class="modal-dialog">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title" id="exampleModalLabel">Vštečkaj prijavljenega računa</h5>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+                 <form>
+                     <div class="mb-3">
+                         <label class="col-form-label">Denarnica pošiljatelja:</label>
+                         <span class="text-muted" id="posiljatelj"></span>
+ 
+                         <label for="denarnica-prejemnika" class="col-form-label">Denarnica prejemnika:</label>
+                         <span class="text-muted" id="prejemnik"></span>
+                     </div>
+                     <div class="mb-3">
+                         <label for="donacija" class="col-form-label">Količina Ethereum <i
+                                 class='fa-brands fa-ethereum'></i> sredstev:</label>
+                         <input type="number" class="form-control" id="ocena" placeholder="Vnesi vrednost med 0.1 in 1">
+                     </div>
+                 </form>
+                 <div id="napakaVseckanje"></div>
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zapri</button>
+                 <button id="potrdi-donacijo" type="button" class="btn btn-primary">Potrdi </button>
+             </div>
+         </div>
+     </div>
+ </div>
+ 
+ 
+ <!-- Modalno okno za pregled donacij -->
+ <div class="modal fade" id="modalno-okno-seznam-donacij" data-bs-backdrop="static" tabindex="-1"
+      aria-labelledby="exampleModalLabel1" aria-hidden="true">
+     <div class="modal-dialog modal-lg">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title">Seznam donacij</h5>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+                 <table class="table">
+                     <thead>
+                     <tr>
+                         <th scope="col">#</th>
+                         <th scope="col">Pošiljatelj</th>
+                         <th scope="col">Všeček</th>
+                     </tr>
+                     </thead>
+                     <tbody id="seznam-donacij">
+                     </tbody>
+                 </table>
+             </div>
+         </div>
+     </div>
+ </div>
+    </div>
+    <!-- KONEC: Vsebina aplikacije -->
+   
+  </body>
+</html>
